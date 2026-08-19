@@ -274,15 +274,18 @@
 
   /* ===== Footer ===== */
   footer{ background:var(--b900); color:var(--b100); padding:48px 0 90px; }
-  footer .wrap{ display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:36px; }
+  footer .wrap{ display:grid; grid-template-columns:1.3fr 1fr 1fr 1fr; gap:32px; }
   footer .brand{ background:#fff; display:inline-flex; padding:10px 14px; border-radius:10px; margin-bottom:12px; }
   footer .brand img{ height:24px; }
   footer p{ font-size:14px; color:var(--b200); line-height:1.7; }
   footer h4{ font-size:12.5px; text-transform:uppercase; letter-spacing:1px; color:var(--amber); margin-bottom:12px; font-weight:700; }
   footer a{ text-decoration:none; color:var(--b100); display:block; margin-bottom:8px; font-size:14px; }
   footer a:hover{ color:#fff; }
+  footer .soon{ display:flex; align-items:center; gap:8px; color:var(--b300); font-size:14px; margin-bottom:8px; }
+  footer .soon .badge-soon{ font-size:10.5px; font-weight:700; background:rgba(255,255,255,0.1); color:var(--b200); padding:2px 8px; border-radius:999px; }
   .bottom{ border-top:1px solid rgba(255,255,255,0.12); margin-top:34px; padding-top:14px; text-align:center; font-size:11px; font-weight:400; color:rgba(255,255,255,0.3); }
-  @media (max-width:760px){ footer .wrap{ grid-template-columns:1fr; gap:24px; } }
+  @media (max-width:900px){ footer .wrap{ grid-template-columns:1fr 1fr; gap:28px; } }
+  @media (max-width:560px){ footer .wrap{ grid-template-columns:1fr; gap:24px; } }
 
   /* ===== Cart drawer ===== */
   .cart-overlay{ position:fixed; inset:0; background:rgba(11,42,68,0.45); z-index:90; opacity:0; pointer-events:none; transition:opacity .2s; }
@@ -486,14 +489,19 @@
     <div>
       <h4>Kontak</h4>
       <a href="https://wa.me/6285157215526?text=Halo%20Taniku%20Agro%2C%20saya%20mau%20tanya%20produk" target="_blank" rel="noopener">💬 WhatsApp: 0851-5721-5526</a>
-      <a href="https://maps.app.goo.gl/q2Evda7yH5rGMV6N7" target="_blank" rel="noopener">📍 Buka di Google Maps</a>
       <a href="https://www.instagram.com/taniku_agro/" target="_blank" rel="noopener">📷 Instagram</a>
       <a href="https://www.tiktok.com/@taniku.agro" target="_blank" rel="noopener">🎵 TikTok</a>
       <a href="https://web.facebook.com/tanikuagro" target="_blank" rel="noopener">👍 Facebook</a>
     </div>
     <div>
-      <h4>Jam Operasional</h4>
+      <h4>Alamat &amp; Jam Operasional</h4>
+      <a href="https://maps.app.goo.gl/q2Evda7yH5rGMV6N7" target="_blank" rel="noopener">📍 Buka di Google Maps</a>
       <p>Setiap hari<br>06.00 – 21.00 WITA</p>
+    </div>
+    <div>
+      <h4>E-commerce</h4>
+      <div class="soon">🛍️ Shopee <span class="badge-soon">Segera Hadir</span></div>
+      <div class="soon">🎵 TikTok Shop <span class="badge-soon">Segera Hadir</span></div>
     </div>
   </div>
   <div class="bottom">© 2026 Taniku Agro — Desa Rintik, Babulu, Penajam Paser Utara</div>
