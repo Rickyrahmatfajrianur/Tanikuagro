@@ -441,7 +441,7 @@
     <div class="products-head">
       <div>
         <h2>Katalog Produk</h2>
-        <p>Cari dengan nama produk atau pilih kategori di bawah.</p>
+        <p>Sebagian produk yang tersedia di toko kami.</p>
       </div>
     </div>
 
@@ -450,8 +450,6 @@
       <input type="text" id="searchInputMobile" placeholder="Cari produk..." autocomplete="off">
       <div class="search-suggest" id="searchSuggestMobile"></div>
     </div>
-
-    <div class="pills" id="pillFilters"></div>
 
     <div class="grid" id="productGrid"></div>
 
@@ -1144,21 +1142,6 @@ function waSingleLink(name){ return `https://wa.me/${WA_NUMBER}?text=${encodeURI
 
 const grid = document.getElementById('productGrid');
 
-// Render category pills dynamically
-const pillContainer = document.getElementById('pillFilters');
-const allPill = document.createElement('div');
-allPill.className = 'pill active';
-allPill.dataset.cat = 'all';
-allPill.textContent = 'Semua Produk';
-pillContainer.appendChild(allPill);
-CATEGORIES.forEach(c => {
-  const p = document.createElement('div');
-  p.className = 'pill';
-  p.dataset.cat = c.id;
-  p.textContent = c.label;
-  pillContainer.appendChild(p);
-});
-
 function filteredProducts(){
   return products.filter(p => {
     const matchCat = activeCat === "all" || p.cat === activeCat;
@@ -1269,16 +1252,6 @@ function attachProductEvents(){
     openDetail(btn.dataset.id);
   }));
 }
-
-document.querySelectorAll('.pill').forEach(pill => {
-  pill.addEventListener('click', () => {
-    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-    pill.classList.add('active');
-    activeCat = pill.dataset.cat;
-    visibleCount = PAGE_SIZE;
-    renderProducts();
-  });
-});
 
 function handleSearch(val){
   searchTerm = val.trim().toLowerCase();
