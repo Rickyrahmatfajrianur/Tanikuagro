@@ -197,6 +197,39 @@
   }
   .pill.active{ background:var(--b600); border-color:var(--b600); color:#fff; }
 
+  /* ===== Katalog: sidebar kategori ===== */
+  .catalog-layout{ display:grid; grid-template-columns:250px 1fr; gap:26px; align-items:start; }
+  .cat-sidebar{
+    background:var(--white); border:1px solid var(--slate200); border-radius:16px;
+    padding:20px; position:sticky; top:88px;
+  }
+  .cat-sidebar-title{
+    display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:800;
+    letter-spacing:0.06em; color:var(--slate400); text-transform:uppercase; margin-bottom:14px;
+  }
+  .cat-sidebar-title .bar{ width:16px; height:2px; background:var(--b600); display:inline-block; }
+  .cat-list{ display:flex; flex-direction:column; gap:2px; }
+  .cat-item{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:10px 10px; border-radius:10px; cursor:pointer; font-weight:600; font-size:14px;
+    color:var(--slate600); transition:background .15s, color .15s;
+  }
+  .cat-item:hover{ background:var(--slate50); }
+  .cat-item.active{ background:var(--b50); color:var(--b700); }
+  .cat-item .label{ display:flex; align-items:center; gap:8px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .cat-item .count{
+    flex-shrink:0; background:var(--slate100); color:var(--slate500); font-size:11.5px; font-weight:700;
+    border-radius:999px; padding:2px 9px; min-width:26px; text-align:center;
+  }
+  .cat-item.active .count{ background:var(--b600); color:#fff; }
+  @media (max-width:900px){
+    .catalog-layout{ grid-template-columns:1fr; }
+    .cat-sidebar{ position:static; }
+    .cat-list{ flex-direction:row; overflow-x:auto; gap:8px; padding-bottom:4px; scrollbar-width:thin; }
+    .cat-item{ flex-shrink:0; white-space:nowrap; }
+    .cat-sidebar-title{ display:none; }
+  }
+
   .search-wrap-mobile{ display:none; margin-bottom:24px; position:relative; }
   @media (max-width:900px){
     .search-wrap-mobile{ display:flex; align-items:center; background:var(--white); border:1.5px solid var(--slate200); border-radius:12px; padding:0 14px; }
@@ -402,7 +435,7 @@
     <div class="products-head">
       <div>
         <h2>Katalog Produk</h2>
-        <p>Cari dengan nama produk atau pilih kategori di bawah.</p>
+        <p>Cari dengan nama produk atau pilih kategori di samping.</p>
       </div>
     </div>
 
@@ -412,13 +445,16 @@
       <div class="search-suggest" id="searchSuggestMobile"></div>
     </div>
 
-    <div class="pills" id="pillFilters"></div>
+    <div class="catalog-layout">
+      <aside class="cat-sidebar" id="catSidebar"></aside>
+      <div>
+        <div class="grid" id="productGrid"></div>
 
-    <div class="grid" id="productGrid"></div>
-
-    <div id="loadMoreWrap" style="display:flex; flex-direction:column; align-items:center; gap:8px; margin-top:28px;">
-      <button id="loadMoreBtn" class="btn btn-ghost" style="border-color:var(--b200); color:var(--b700);">Tampilkan Lebih Banyak</button>
-      <span id="loadMoreCount" class="mono" style="color:var(--slate400); font-size:12px;"></span>
+        <div id="loadMoreWrap" style="display:flex; flex-direction:column; align-items:center; gap:8px; margin-top:28px;">
+          <button id="loadMoreBtn" class="btn btn-ghost" style="border-color:var(--b200); color:var(--b700);">Tampilkan Lebih Banyak</button>
+          <span id="loadMoreCount" class="mono" style="color:var(--slate400); font-size:12px;"></span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1082,20 +1118,36 @@ function waSingleLink(name){ return `https://wa.me/${WA_NUMBER}?text=${encodeURI
 
 const grid = document.getElementById('productGrid');
 
-// Render category pills dynamically
-const pillContainer = document.getElementById('pillFilters');
-const allPill = document.createElement('div');
-allPill.className = 'pill active';
-allPill.dataset.cat = 'all';
-allPill.textContent = 'Semua Produk';
-pillContainer.appendChild(allPill);
-CATEGORIES.forEach(c => {
-  const p = document.createElement('div');
-  p.className = 'pill';
-  p.dataset.cat = c.id;
-  p.textContent = c.label;
-  pillContainer.appendChild(p);
-});
+// Render sidebar kategori dengan jumlah produk per kategori
+const catSidebar = document.getElementById('catSidebar');
+
+function renderCatSidebar(){
+  const catCounts = {};
+  products.forEach(p => { catCounts[p.cat] = (catCounts[p.cat] || 0) + 1; });
+
+  let html = `<div class="cat-sidebar-title"><span class="bar"></span>Kategori</div><div class="cat-list">`;
+  html += `<div class="cat-item ${activeCat === 'all' ? 'active' : ''}" data-cat="all">
+    <span class="label">Semua Produk</span><span class="count">${products.length}</span>
+  </div>`;
+  CATEGORIES.forEach(c => {
+    const count = catCounts[c.id] || 0;
+    html += `<div class="cat-item ${activeCat === c.id ? 'active' : ''}" data-cat="${c.id}">
+      <span class="label">${c.icon} ${c.label}</span><span class="count">${count}</span>
+    </div>`;
+  });
+  html += `</div>`;
+  catSidebar.innerHTML = html;
+
+  catSidebar.querySelectorAll('.cat-item').forEach(item => {
+    item.addEventListener('click', () => {
+      activeCat = item.dataset.cat;
+      visibleCount = PAGE_SIZE;
+      renderCatSidebar();
+      renderProducts();
+    });
+  });
+}
+renderCatSidebar();
 
 function filteredProducts(){
   return products.filter(p => {
@@ -1212,16 +1264,6 @@ function attachProductEvents(){
     openDetail(btn.dataset.id);
   }));
 }
-
-document.querySelectorAll('.pill').forEach(pill => {
-  pill.addEventListener('click', () => {
-    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-    pill.classList.add('active');
-    activeCat = pill.dataset.cat;
-    visibleCount = PAGE_SIZE;
-    renderProducts();
-  });
-});
 
 function handleSearch(val){
   searchTerm = val.trim().toLowerCase();
