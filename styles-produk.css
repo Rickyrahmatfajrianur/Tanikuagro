@@ -25,6 +25,7 @@
   body{
     margin:0; background:var(--slate50); color:var(--ink);
     font-family:'Inter',sans-serif; font-size:16px; line-height:1.6;
+    overflow-x:hidden;
   }
   h1,h2,h3{ font-family:'Sora',sans-serif; margin:0; }
   .mono{ font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:0.2px; }
@@ -192,10 +193,10 @@
   .pill.active{ background:var(--b600); border-color:var(--b600); color:#fff; }
 
   /* ===== Katalog: sidebar kategori ===== */
-  .catalog-layout{ display:grid; grid-template-columns:250px 1fr; gap:26px; align-items:start; }
+  .catalog-layout{ display:grid; grid-template-columns:250px 1fr; gap:26px; align-items:start; min-width:0; }
   .cat-sidebar{
     background:var(--white); border:1px solid var(--slate200); border-radius:16px;
-    padding:20px; position:sticky; top:88px;
+    padding:20px; position:sticky; top:88px; min-width:0;
   }
   .cat-sidebar-title{
     display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:800;
@@ -215,7 +216,7 @@
     flex-shrink:0; background:var(--slate100); color:var(--slate500); font-size:11.5px; font-weight:700;
     border-radius:999px; padding:2px 9px; min-width:26px; text-align:center;
   }
-  .cat-item.active .count{ background:var(--b600); color:#fff; }
+  .catalog-layout > div{ min-width:0; }
   @media (max-width:900px){
     .catalog-layout{ grid-template-columns:1fr; }
     .cat-sidebar{ position:static; }
