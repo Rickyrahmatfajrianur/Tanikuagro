@@ -371,7 +371,7 @@
 
   /* ===== Tentang Kami ===== */
   .tentang-hero-photo{
-    position:relative; min-height:520px; display:flex; align-items:center; overflow:hidden;
+    position:relative; min-height:600px; display:flex; align-items:center; overflow:hidden;
   }
   .hero-photo-bg{
     position:absolute; inset:0; background-image:url('images/galeri/20230421_061456.webp');
@@ -396,7 +396,7 @@
   }
   @keyframes scrollcue{ 0%{ opacity:1; transform:translate(-50%,0);} 70%{ opacity:0; transform:translate(-50%,10px);} 100%{ opacity:0; } }
   @media (max-width:600px){
-    .tentang-hero-photo{ min-height:420px; }
+    .tentang-hero-photo{ min-height:520px; }
     .tentang-hero-photo h1{ font-size:28px; }
     .hero-photo-content{ padding:80px 0 60px; }
   }
