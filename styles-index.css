@@ -106,7 +106,7 @@
     position:absolute; inset:0; z-index:0;
     background:linear-gradient(115deg, rgba(11,42,68,0.92) 0%, rgba(11,42,68,0.82) 40%, rgba(11,111,219,0.55) 100%);
   }
-  .hero-content{ position:relative; z-index:1; max-width:640px; padding:80px 24px; }
+  .hero-content{ position:relative; z-index:1; max-width:640px; padding:80px 0; }
   .eyebrow-pill{
     display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.12); color:#fff;
     padding:7px 14px; border-radius:999px; font-weight:700; font-size:13px; margin-bottom:18px;
@@ -138,7 +138,7 @@
 
   @media (max-width:900px){
     .hero-photo-mode{ min-height:520px; }
-    .hero-content{ padding:64px 20px; }
+    .hero-content{ padding:64px 0; }
   }
 
   /* ===== Trust strip ===== */
