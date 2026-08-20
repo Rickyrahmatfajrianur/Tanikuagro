@@ -242,6 +242,32 @@
   }
   .btn-addcart:hover{ background:var(--b700); }
   .btn-addcart.added{ background:var(--green); }
+
+  /* ===== Toast notifikasi ===== */
+  .toast{
+    position:fixed; top:18px; right:18px; z-index:1200;
+    display:flex; align-items:center; gap:12px;
+    background:var(--white); border:1px solid var(--slate200); border-radius:14px;
+    box-shadow:0 12px 32px rgba(11,42,68,0.16); padding:14px 16px;
+    max-width:360px; transform:translateY(-14px); opacity:0; pointer-events:none;
+    transition:transform .25s ease, opacity .25s ease;
+  }
+  .toast.show{ transform:translateY(0); opacity:1; pointer-events:auto; }
+  .toast-ic{
+    flex-shrink:0; width:34px; height:34px; border-radius:50%; background:var(--green);
+    color:#fff; display:flex; align-items:center; justify-content:center; font-size:17px; font-weight:700;
+  }
+  .toast-body{ flex:1; min-width:0; }
+  .toast-title{ font-size:13px; font-weight:700; color:var(--b900); }
+  .toast-name{ font-size:12.5px; color:var(--slate500); margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .toast-cart-btn{
+    flex-shrink:0; background:var(--b600); color:#fff; border:none; border-radius:9px;
+    padding:8px 12px; font-size:12.5px; font-weight:700; cursor:pointer; white-space:nowrap;
+  }
+  .toast-cart-btn:hover{ background:var(--b700); }
+  @media (max-width:480px){
+    .toast{ left:12px; right:12px; top:12px; max-width:none; }
+  }
   .btn-detail{
     width:100%; margin-top:8px; background:#fff; border:1.5px solid var(--slate200); color:var(--b700);
     height:34px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; transition:border-color .15s;
@@ -566,6 +592,15 @@
 <div class="sticky-cart-bar" id="stickyCartBar">
   <b><span id="stickyCartCount">0</span> item di keranjang</b>
   <button class="btn-view" id="stickyCartViewBtn">Lihat Keranjang</button>
+</div>
+
+<div class="toast" id="toast">
+  <div class="toast-ic">✓</div>
+  <div class="toast-body">
+    <div class="toast-title">Berhasil ditambahkan</div>
+    <div class="toast-name" id="toastProductName"></div>
+  </div>
+  <button class="toast-cart-btn" id="toastCartBtn">🛒 Lihat Keranjang</button>
 </div>
 
 <script>
@@ -1248,6 +1283,8 @@ function attachProductEvents(){
     btn.classList.add('added');
     setTimeout(() => { btn.textContent = "+ Keranjang"; btn.classList.remove('added'); }, 1000);
     updateCartUI();
+    const prod = products.find(p => p.id === id);
+    if(prod) showToast(prod.name);
   }));
   grid.querySelectorAll('.btn-detail').forEach(btn => btn.addEventListener('click', () => {
     openDetail(btn.dataset.id);
@@ -1352,6 +1389,20 @@ const stickyCartBar = document.getElementById('stickyCartBar');
 const stickyCartCount = document.getElementById('stickyCartCount');
 
 function openCart(){ cartOverlay.classList.add('open'); cartDrawer.classList.add('open'); }
+
+let toastTimer = null;
+function showToast(name){
+  const toast = document.getElementById('toast');
+  document.getElementById('toastProductName').textContent = name;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { toast.classList.remove('show'); }, 3000);
+}
+document.getElementById('toastCartBtn').addEventListener('click', () => {
+  document.getElementById('toast').classList.remove('show');
+  clearTimeout(toastTimer);
+  openCart();
+});
 function closeCart(){ cartOverlay.classList.remove('open'); cartDrawer.classList.remove('open'); }
 document.getElementById('cartBtn').addEventListener('click', openCart);
 document.getElementById('cartCloseBtn').addEventListener('click', closeCart);
@@ -1503,6 +1554,8 @@ detailAddCart.addEventListener('click', () => {
   detailAddCart.classList.add('added');
   setTimeout(() => { detailAddCart.textContent = "+ Tambahkan ke Keranjang"; detailAddCart.classList.remove('added'); }, 1000);
   updateCartUI();
+  const prod = products.find(p => p.id === currentDetailId);
+  if(prod) showToast(prod.name);
 });
 
 renderProducts();
