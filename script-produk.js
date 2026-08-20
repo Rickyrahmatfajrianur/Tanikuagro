@@ -139,22 +139,22 @@ const products = [
 ];
 
 const CATEGORIES = [
-  { id:"herbisida", label:"Herbisida", icon:"🌿" },
-  { id:"fungisida", label:"Fungisida", icon:"🍄" },
-  { id:"insektisida", label:"Insektisida", icon:"🐛" },
-  { id:"akarisida", label:"Akarisida", icon:"🕷️" },
-  { id:"nematisida", label:"Nematisida", icon:"🪱" },
-  { id:"moluskisida", label:"Moluskisida", icon:"🐌" },
-  { id:"rodentisida", label:"Rodentisida", icon:"🐀" },
-  { id:"bakterisida", label:"Bakterisida", icon:"🦠" },
-  { id:"zpt", label:"ZPT", icon:"🌱" },
-  { id:"perekat", label:"Perekat & Surfaktan", icon:"💧" },
-  { id:"pupuk", label:"Pupuk", icon:"🌾" },
-  { id:"benih", label:"Benih", icon:"🌰" },
-  { id:"biopestisida", label:"Biopestisida", icon:"🍃" },
-  { id:"alat", label:"Alat Pertanian", icon:"🧰" },
-  { id:"sparepart", label:"Spare Part", icon:"⚙️" },
-  { id:"lainnya", label:"Lainnya", icon:"📦" },
+  { id:"herbisida", label:"Herbisida", icon:CATEGORY_ICONS.herbisida },
+  { id:"fungisida", label:"Fungisida", icon:CATEGORY_ICONS.fungisida },
+  { id:"insektisida", label:"Insektisida", icon:CATEGORY_ICONS.insektisida },
+  { id:"akarisida", label:"Akarisida", icon:CATEGORY_ICONS.akarisida },
+  { id:"nematisida", label:"Nematisida", icon:CATEGORY_ICONS.nematisida },
+  { id:"moluskisida", label:"Moluskisida", icon:CATEGORY_ICONS.moluskisida },
+  { id:"rodentisida", label:"Rodentisida", icon:CATEGORY_ICONS.rodentisida },
+  { id:"bakterisida", label:"Bakterisida", icon:CATEGORY_ICONS.bakterisida },
+  { id:"zpt", label:"ZPT", icon:CATEGORY_ICONS.zpt },
+  { id:"perekat", label:"Perekat & Surfaktan", icon:CATEGORY_ICONS.perekat },
+  { id:"pupuk", label:"Pupuk", icon:CATEGORY_ICONS.pupuk },
+  { id:"benih", label:"Benih", icon:CATEGORY_ICONS.benih },
+  { id:"biopestisida", label:"Biopestisida", icon:CATEGORY_ICONS.biopestisida },
+  { id:"alat", label:"Alat Pertanian", icon:CATEGORY_ICONS.alat },
+  { id:"sparepart", label:"Spare Part", icon:CATEGORY_ICONS.sparepart },
+  { id:"lainnya", label:"Lainnya", icon:CATEGORY_ICONS.lainnya },
 ];
 function catLabel(id){ const c = CATEGORIES.find(c => c.id === id); return c ? c.label : id; }
 
@@ -221,10 +221,10 @@ function renderProducts(){
     ph.className = 'placeholder-card';
     ph.style.gridColumn = '1/-1';
     ph.innerHTML = `
-      <div class="ic">${cat ? cat.icon : '📦'}</div>
+      <div class="ic">${cat ? cat.icon : ICONS.package}</div>
       <h3>${cat ? cat.label : 'Produk'}</h3>
       <p>Tersedia di toko. Tanya ketersediaan & harga langsung via WhatsApp.</p>
-      <a href="${waSingleLink(cat ? cat.label : 'produk ini')}" target="_blank" rel="noopener">💬 Tanya Produk</a>
+      <a href="${waSingleLink(cat ? cat.label : 'produk ini')}" target="_blank" rel="noopener">${ICONS.whatsapp} Tanya Produk</a>
     `;
     grid.appendChild(ph);
     updateLoadMoreUI(0, 0);
@@ -247,7 +247,7 @@ function renderProducts(){
     const catMeta = CATEGORIES.find(c => c.id === p.cat);
     const imgHtml = p.img
       ? `<img src="${p.img}" alt="${p.name}" loading="lazy">`
-      : `<div class="noimg-ic">${catMeta ? catMeta.icon : '📦'}</div><div class="noimg-txt">Foto menyusul</div>`;
+      : `<div class="noimg-ic">${catMeta ? catMeta.icon : ICONS.package}</div><div class="noimg-txt">Foto menyusul</div>`;
     card.innerHTML = `
       <div class="imgwrap${p.img ? '' : ' noimg'}">${imgHtml}</div>
       <div class="body">
@@ -354,7 +354,7 @@ function buildSuggestHtml(query){
     const catMeta = CATEGORIES.find(c => c.id === p.cat);
     const thumb = p.img
       ? `<img src="${p.img}" alt="">`
-      : `<div style="width:34px;height:34px;border-radius:7px;background:var(--slate50);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">${catMeta ? catMeta.icon : '📦'}</div>`;
+      : `<div style="width:34px;height:34px;border-radius:7px;background:var(--slate50);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">${catMeta ? catMeta.icon : ICONS.package}</div>`;
     return `
     <div class="sg-item" data-id="${p.id}">
       ${thumb}
@@ -534,7 +534,7 @@ function openDetail(id){
   } else {
     const catMeta = CATEGORIES.find(c => c.id === p.cat);
     detailImg.style.display = 'none';
-    detailNoImgIcon.textContent = catMeta ? catMeta.icon : '📦';
+    detailNoImgIcon.innerHTML = catMeta ? catMeta.icon : ICONS.package;
     detailNoImg.style.display = 'flex';
   }
   detailChip.textContent = catLabel(p.cat);
