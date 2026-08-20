@@ -483,7 +483,7 @@ const detailAddCart = document.getElementById('detailAddCart');
 const detailWaLink = document.getElementById('detailWaLink');
 let currentDetailId = null;
 
-function openDetail(id){
+function openDetail(id, opts = {}){
   const p = products.find(pr => pr.id === id);
   if(!p) return;
   currentDetailId = id;
@@ -513,16 +513,59 @@ function openDetail(id){
 
   detailOverlay.classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  if(!opts.fromPopstate){
+    const url = new URL(window.location);
+    url.searchParams.set('p', id);
+    history.pushState({ tanikuProdukId: id }, '', url);
+    detailPushed = true;
+  }
+}
+
+let detailPushed = false;
+
+function closeDetailUI(){
+  detailOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+  currentDetailId = null;
 }
 
 function closeDetail(){
-  detailOverlay.classList.remove('open');
-  document.body.style.overflow = '';
+  if(detailPushed){
+    detailPushed = false;
+    history.back();
+  } else {
+    closeDetailUI();
+    const url = new URL(window.location);
+    if(url.searchParams.has('p')){
+      url.searchParams.delete('p');
+      history.replaceState({}, '', url);
+    }
+  }
 }
 
 document.getElementById('detailCloseBtn').addEventListener('click', closeDetail);
 detailOverlay.addEventListener('click', e => { if(e.target === detailOverlay) closeDetail(); });
 document.addEventListener('keydown', e => { if(e.key === 'Escape') closeDetail(); });
+
+window.addEventListener('popstate', () => {
+  const params = new URLSearchParams(window.location.search);
+  const pid = params.get('p');
+  if(pid){
+    openDetail(pid, { fromPopstate: true });
+  } else {
+    closeDetailUI();
+  }
+});
+
+(function checkInitialDetailParam(){
+  const params = new URLSearchParams(window.location.search);
+  const pid = params.get('p');
+  if(pid){
+    openDetail(pid, { fromPopstate: true });
+  }
+})();
+
 
 document.getElementById('detailQPlus').addEventListener('click', () => {
   if(!currentDetailId) return;
