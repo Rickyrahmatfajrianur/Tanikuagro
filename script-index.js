@@ -12,6 +12,23 @@ const brands = [
   { name:"Asiana Chemicalindo", logo:"images/brand/asiana-chemicalindo.webp" },
   { name:"Prima Karya", logo:"images/brand/prima-karya.webp" },
   { name:"Sari Kresna Kimia", logo:"images/brand/sari-kresna-kimia.webp" },
+  { name:"Excel Meg Indo", logo:"images/brand/excel-meg-indo.webp" },
+  { name:"Adil Makmur Fajar", logo:"images/brand/adil-makmur-fajar.webp" },
+  { name:"Meroke Tetap Jaya", logo:"images/brand/meroke-tetap-jaya.webp" },
+  { name:"Maxxi Agri", logo:"images/brand/maxxi-agri.webp" },
+  { name:"Delta Chemical", logo:"images/brand/delta-chemical.webp" },
+  { name:"DGW", logo:"images/brand/dgw.webp" },
+  { name:"Agricon", logo:"images/brand/agricon.webp" },
+  { name:"Tiara Buana Mandiri", logo:"images/brand/tiara-buana-mandiri.webp" },
+  { name:"Saprotan Utama", logo:"images/brand/saprotan-utama.webp" },
+  { name:"Cap Panah Merah", logo:"images/brand/cap-panah-merah.webp" },
+  { name:"Benih Pertiwi", logo:"images/brand/benih-pertiwi.webp" },
+  { name:"Santani Agro", logo:"images/brand/santani-agro.webp" },
+  { name:"Mahkota", logo:"images/brand/mahkota.webp" },
+  { name:"Petrokimia Kayaku", logo:"images/brand/petrokimia-kayaku.webp" },
+  { name:"MTA Jaya", logo:"images/brand/mta-jaya.webp" },
+  { name:"Petrosida Gresik", logo:"images/brand/petrosida-gresik.webp" },
+  { name:"Cap Kapal Terbang", logo:"images/brand/cap-kapal-terbang.webp" },
 ];
 
 function renderBrandMarquee(){
