@@ -671,3 +671,23 @@ updateCartUI();
   });
 })();
 
+
+// ===== Placeholder tombol Login (belum berfungsi, admin panel akan datang) =====
+(function(){
+  const btn = document.getElementById("loginPlaceholderBtn");
+  if(!btn) return;
+  btn.addEventListener("click", () => {
+    let msg = document.getElementById("loginSoonMsg");
+    if(!msg){
+      msg = document.createElement("div");
+      msg.id = "loginSoonMsg";
+      msg.textContent = "🔒 Fitur login admin akan segera hadir";
+      msg.style.cssText = "position:fixed; top:74px; right:16px; left:auto; max-width:90vw; background:#0B2A44; color:#fff; padding:11px 18px; border-radius:11px; font-size:13px; font-weight:600; z-index:999; box-shadow:0 10px 26px rgba(0,0,0,0.22); opacity:0; transition:opacity .25s ease; pointer-events:none;";
+      document.body.appendChild(msg);
+    }
+    msg.style.opacity = "1";
+    clearTimeout(window._loginMsgTimer);
+    window._loginMsgTimer = setTimeout(() => { msg.style.opacity = "0"; }, 2400);
+  });
+})();
+
