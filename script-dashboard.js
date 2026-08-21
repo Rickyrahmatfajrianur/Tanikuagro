@@ -1,6 +1,6 @@
 // ===== Konfigurasi Google Sheets =====
 // Isi PUBLISHED_CSV_URL dengan link "Publish to web" (format CSV) dari sheet "DAFTAR BARANG" kamu.
-const PUBLISHED_CSV_URL = "";
+const PUBLISHED_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQFAW59sO9oG4SuLeQJFe2i9zsSZXxOZ_tT5aXkhkQekJ4dlHrpSyqvm5CLf-AsgHhYzC1hW7n7xFH1/pub?gid=1024901898&single=true&output=csv";
 
 // Ambang batas "stok menipis" bawaan (mengikuti aturan yang sudah dipakai di file kios kamu: < 5)
 const DEFAULT_STOK_MIN = 5;
