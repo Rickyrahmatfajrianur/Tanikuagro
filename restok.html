@@ -4,7 +4,7 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Stok — Taniku Agro</title>
+  <title>Stok Masuk — Taniku Agro</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
@@ -27,11 +27,11 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="M3.3 7 12 12l8.7-5"/><path d="M12 22V12"/></svg>
         Master Produk <span class="soon-badge">Segera</span>
       </a>
-      <a href="dashboard" class="active">
+      <a href="dashboard">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
         Stok Barang
       </a>
-      <a href="restok">
+      <a href="restok" class="active">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
         Stok Masuk
       </a>
@@ -75,7 +75,7 @@
 
     <header class="dash-header">
       <div class="dash-header-left">
-        <span class="dash-title">Stok Barang <span class="dash-tag">Internal</span></span>
+        <span class="dash-title">Stok Masuk <span class="dash-tag">Internal</span></span>
       </div>
       <div class="dash-header-right">
         <span class="last-sync" id="lastSync">Memuat data...</span>
@@ -93,47 +93,41 @@
         <div class="setup-ic">⚙️</div>
         <div>
           <b>Belum terhubung ke spreadsheet</b>
-          <p>Dashboard ini masih menampilkan status kosong karena belum dikonfigurasi. Ikuti panduan yang diberikan untuk menghubungkan Google Sheets kamu.</p>
+          <p>Halaman ini menampilkan riwayat restok barang. Hubungkan ke sheet "RESTOK BARANG" kamu untuk mulai memantau.</p>
         </div>
       </div>
 
       <div class="stats-row">
         <div class="stat-card">
-          <div class="ic-circle ic-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/></svg></div>
-          <div class="lbl">Total Produk</div>
+          <div class="ic-circle ic-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+          <div class="lbl">Total Transaksi</div>
           <div class="val" id="statTotal">–</div>
         </div>
         <div class="stat-card">
-          <div class="ic-circle ic-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <div class="lbl">Stok Aman</div>
-          <div class="val" id="statAman">–</div>
+          <div class="ic-circle ic-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+          <div class="lbl">Total Barang Masuk</div>
+          <div class="val" id="statBarang">–</div>
         </div>
         <div class="stat-card">
-          <div class="ic-circle ic-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-          <div class="lbl">Stok Menipis</div>
-          <div class="val" id="statMenipis">–</div>
+          <div class="ic-circle ic-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="lbl">Total Nilai Pembelian</div>
+          <div class="val" id="statNilai" style="font-size:17px;">–</div>
         </div>
         <div class="stat-card">
-          <div class="ic-circle ic-red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
-          <div class="lbl">Stok Habis</div>
-          <div class="val" id="statHabis">–</div>
+          <div class="ic-circle ic-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="lbl">Restok Terakhir</div>
+          <div class="val" id="statTerakhir" style="font-size:16px;">–</div>
         </div>
       </div>
 
       <div class="panel">
         <div class="panel-head">
-          <h3>Daftar Stok Produk</h3>
+          <h3>Riwayat Restok Barang</h3>
           <div class="panel-controls">
             <div class="search-box">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-              <input type="text" id="stockSearch" placeholder="Cari produk...">
+              <input type="text" id="stockSearch" placeholder="Cari produk atau distributor...">
             </div>
-            <select id="filterStatus">
-              <option value="all">Semua Status</option>
-              <option value="aman">Stok Aman</option>
-              <option value="menipis">Stok Menipis</option>
-              <option value="habis">Stok Habis</option>
-            </select>
           </div>
         </div>
 
@@ -141,16 +135,18 @@
           <table id="stockTable">
             <thead>
               <tr>
-                <th>Produk</th>
-                <th>Kategori</th>
-                <th>Stok</th>
-                <th>Satuan</th>
-                <th>Batas Minimum</th>
+                <th>Tanggal</th>
+                <th>No Nota</th>
+                <th>Distributor</th>
+                <th>Nama Barang</th>
+                <th>Banyak</th>
+                <th>Harga Beli</th>
+                <th>Total</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody id="stockTableBody">
-              <tr><td colspan="6" class="loading-row">Memuat data stok...</td></tr>
+              <tr><td colspan="8" class="loading-row">Memuat data...</td></tr>
             </tbody>
           </table>
         </div>
@@ -162,6 +158,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-<script src="script-dashboard.js"></script>
+<script src="script-restok.js"></script>
 </body>
 </html>
