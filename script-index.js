@@ -55,7 +55,7 @@ const products = [
   { id:"abacel-500", name:"Abacel 18 EC 500ml", cat:"insektisida", size:"500 ml", img:null, desc:"Insektisida racun kontak & lambung untuk mengendalikan thrips dan ulat grayak.", activeIngredient:"Abamektin 18 g/L", target:"Thrips dan ulat grayak pada cabai, bawang merah, tomat, dan padi", long:"Insektisida berbahan aktif abamektin yang bekerja sebagai racun kontak, lambung, dan translaminar (meresap ke jaringan tanaman). Efektif mengendalikan hama thrips dan ulat grayak pada tanaman cabai, bawang merah, tomat, dan padi." },
   { id:"emacel-100", name:"Emacel 30 EC 100ml", cat:"insektisida", size:"100 ml", img:"images/produk/emacel-100.webp", desc:"Insektisida racun kontak & lambung untuk mengendalikan ulat grayak dan pengorok daun.", activeIngredient:"Emamektin Benzoat 30 g/L", target:"Ulat grayak dan pengorok daun pada bawang merah, padi, jagung, cabai, dan kubis", long:"Insektisida berbahan aktif emamektin benzoat, bekerja sebagai racun kontak dan lambung berbentuk pekatan yang dapat diemulsikan. Efektif mengendalikan hama ulat grayak dan pengorok daun pada tanaman bawang merah, padi, jagung, cabai, dan kubis." },
   { id:"emacel-250", name:"Emacel 30 EC 250ml", cat:"insektisida", size:"250 ml", img:"images/produk/emacel-250.webp", desc:"Insektisida racun kontak & lambung untuk mengendalikan ulat grayak dan pengorok daun.", activeIngredient:"Emamektin Benzoat 30 g/L", target:"Ulat grayak dan pengorok daun pada bawang merah, padi, jagung, cabai, dan kubis", long:"Insektisida berbahan aktif emamektin benzoat, bekerja sebagai racun kontak dan lambung berbentuk pekatan yang dapat diemulsikan. Efektif mengendalikan hama ulat grayak dan pengorok daun pada tanaman bawang merah, padi, jagung, cabai, dan kubis." },
-  { id:"emacel-500", name:"Emacel 30 EC 500ml", cat:"insektisida", size:"500 ml", img:null, desc:"Insektisida racun kontak & lambung untuk mengendalikan ulat grayak dan pengorok daun.", activeIngredient:"Emamektin Benzoat 30 g/L", target:"Ulat grayak dan pengorok daun pada bawang merah, padi, jagung, cabai, dan kubis", long:"Insektisida berbahan aktif emamektin benzoat, bekerja sebagai racun kontak dan lambung berbentuk pekatan yang dapat diemulsikan. Efektif mengendalikan hama ulat grayak dan pengorok daun pada tanaman bawang merah, padi, jagung, cabai, dan kubis." },
+  { id:"emacel-500", name:"Emacel 30 EC 500ml", cat:"insektisida", size:"500 ml", img:"images/produk/emacel-500.webp", desc:"Insektisida racun kontak & lambung untuk mengendalikan ulat grayak dan pengorok daun.", activeIngredient:"Emamektin Benzoat 30 g/L", target:"Ulat grayak dan pengorok daun pada bawang merah, padi, jagung, cabai, dan kubis", long:"Insektisida berbahan aktif emamektin benzoat, bekerja sebagai racun kontak dan lambung berbentuk pekatan yang dapat diemulsikan. Efektif mengendalikan hama ulat grayak dan pengorok daun pada tanaman bawang merah, padi, jagung, cabai, dan kubis." },
   { id:"score-80", name:"Score 250 EC 80ml", cat:"fungisida", size:"80 ml", img:"images/produk/score-80.webp", desc:"Fungisida sistemik untuk mengendalikan penyakit bercak daun dan busuk phytophthora.", activeIngredient:"Difenokonazol 250 g/L", target:"Bercak daun dan busuk phytophthora pada padi, cabai, dan tanaman hortikultura lainnya", long:"Fungisida sistemik produksi Syngenta dengan bahan aktif difenokonazol yang juga berperan sebagai zat pengatur tumbuh (ZPT). Bekerja masuk ke jaringan tanaman untuk mengendalikan penyakit akibat jamur, terutama bercak daun dan busuk phytophthora, pada padi, cabai, dan berbagai tanaman hortikultura lainnya." },
   { id:"score-250", name:"Score 250 EC 250ml", cat:"fungisida", size:"250 ml", img:null, desc:"Fungisida sistemik untuk mengendalikan penyakit bercak daun dan busuk phytophthora.", activeIngredient:"Difenokonazol 250 g/L", target:"Bercak daun dan busuk phytophthora pada padi, cabai, dan tanaman hortikultura lainnya", long:"Fungisida sistemik produksi Syngenta dengan bahan aktif difenokonazol yang juga berperan sebagai zat pengatur tumbuh (ZPT). Bekerja masuk ke jaringan tanaman untuk mengendalikan penyakit akibat jamur, terutama bercak daun dan busuk phytophthora, pada padi, cabai, dan berbagai tanaman hortikultura lainnya." },
   { id:"prevathon-100", name:"Prevathon 50 SC 100ml", cat:"insektisida", size:"100 ml", img:"images/produk/prevathon-100.webp", desc:"Insektisida sistemik translaminar untuk mengendalikan penggerek batang padi dan ulat grayak.", activeIngredient:"Klorantraniliprol 50 g/L", target:"Penggerek batang padi (sundep), ulat grayak, dan hama perusak daun", long:"Insektisida sistemik racun kontak, lambung, dan syaraf yang bekerja secara translaminar (meresap ke jaringan tanaman). Sangat efektif mengendalikan hama penggerek batang padi (sundep), ulat grayak, dan berbagai hama perusak daun pada padi, cabai, jagung, dan tanaman lainnya." },
@@ -635,3 +635,61 @@ updateCartUI();
   });
 })();
 
+
+// ===== Hero: reveal lembut saat halaman dibuka + typewriter kata terakhir =====
+(function(){
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const revealEls = document.querySelectorAll('.hero-content .reveal');
+
+  function playReveal(){
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        revealEls.forEach(el => el.classList.add('revealed'));
+      });
+    });
+  }
+
+  if(prefersReduced){
+    revealEls.forEach(el => el.classList.add('revealed'));
+  } else {
+    playReveal();
+  }
+
+  const typedEl = document.getElementById('typedWord');
+  if(!typedEl) return;
+  if(prefersReduced) return; // biarkan statis "Hebat" saja, jangan looping terus-menerus
+
+  const words = ["Hebat", "Maju", "Tangguh", "Sejahtera"];
+  let wordIndex = 0;
+  let charIndex = words[0].length;
+  let isDeleting = false;
+
+  function typeLoop(){
+    const currentWord = words[wordIndex];
+    if(isDeleting){
+      charIndex--;
+      typedEl.textContent = currentWord.substring(0, charIndex);
+      if(charIndex === 0){
+        isDeleting = false;
+        wordIndex = (wordIndex + 1) % words.length;
+        setTimeout(typeLoop, 350);
+        return;
+      }
+      setTimeout(typeLoop, 45);
+    } else {
+      charIndex++;
+      typedEl.textContent = currentWord.substring(0, charIndex);
+      if(charIndex === currentWord.length){
+        isDeleting = true;
+        setTimeout(typeLoop, 1500);
+        return;
+      }
+      setTimeout(typeLoop, 95);
+    }
+  }
+
+  setTimeout(() => {
+    isDeleting = true;
+    setTimeout(typeLoop, 1200);
+  }, 1000);
+})();
