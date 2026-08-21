@@ -253,7 +253,6 @@ function renderProducts(){
       <div class="body">
         <span class="chip ${p.cat}">${catLabel(p.cat)}</span>
         <h3>${p.name}</h3>
-        <div class="mono">Kemasan ${p.size}</div>
         <p class="desc">${p.desc}</p>
         <div class="card-bottom">
           <div class="qty-stepper">
