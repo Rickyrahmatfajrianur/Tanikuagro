@@ -37,44 +37,47 @@
 <section class="login-hero">
   <div class="login-hero-bg"></div>
   <div class="login-hero-overlay"></div>
-  <div class="login-hero-content">
 
-    <div class="login-badge">🔒 Panel Admin</div>
-    <h1>Login Admin</h1>
-    <p class="login-lede">Halaman ini khusus untuk pengelola Taniku Agro, bukan untuk pelanggan.</p>
+  <div class="login-hero-main">
+    <div class="login-hero-content">
 
-    <div class="login-card">
-      <div class="dev-banner">
-        <span class="dev-ic">🚧</span>
-        <div>
-          <b>Fitur ini sedang dalam pengembangan</b>
-          <p>Sistem login &amp; panel admin belum aktif. Saat ini pengelolaan produk masih dilakukan langsung melalui pengembang website.</p>
+      <div class="login-badge">🔒 Panel Admin</div>
+      <h1>Login Admin</h1>
+      <p class="login-lede">Halaman ini khusus untuk pengelola Taniku Agro, bukan untuk pelanggan.</p>
+
+      <div class="login-card">
+        <div class="dev-banner">
+          <span class="dev-ic">🚧</span>
+          <div>
+            <b>Fitur ini sedang dalam pengembangan</b>
+            <p>Sistem login &amp; panel admin belum aktif. Saat ini pengelolaan produk masih dilakukan langsung melalui pengembang website.</p>
+          </div>
         </div>
+
+        <form id="loginForm" autocomplete="off">
+          <label class="field">
+            <span>Username / Email</span>
+            <input type="text" placeholder="admin@tanikuagro.com" disabled>
+          </label>
+          <label class="field">
+            <span>Password</span>
+            <input type="password" placeholder="••••••••" disabled>
+          </label>
+          <button type="submit" class="btn-login-submit">Masuk</button>
+        </form>
+
+        <a class="back-link" href="/">← Kembali ke Beranda</a>
       </div>
 
-      <form id="loginForm" autocomplete="off">
-        <label class="field">
-          <span>Username / Email</span>
-          <input type="text" placeholder="admin@tanikuagro.com" disabled>
-        </label>
-        <label class="field">
-          <span>Password</span>
-          <input type="password" placeholder="••••••••" disabled>
-        </label>
-        <button type="submit" class="btn-login-submit">Masuk</button>
-      </form>
-
-      <a class="back-link" href="/">← Kembali ke Beranda</a>
     </div>
-
   </div>
+
+  <footer id="kontak" class="login-footer">
+    <div class="wrap">
+      <p>© 2026 Taniku Agro — Desa Rintik, Babulu, Penajam Paser Utara</p>
+    </div>
+  </footer>
 </section>
-
-<footer id="kontak" class="login-footer">
-  <div class="wrap">
-    <p>© 2026 Taniku Agro — Desa Rintik, Babulu, Penajam Paser Utara</p>
-  </div>
-</footer>
 
 <script src="script-login.js"></script>
 </body>
