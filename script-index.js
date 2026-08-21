@@ -635,3 +635,61 @@ updateCartUI();
   });
 })();
 
+
+// ===== Hero: reveal lembut saat halaman dibuka + typewriter kata terakhir =====
+(function(){
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const revealEls = document.querySelectorAll('.hero-content .reveal');
+
+  function playReveal(){
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        revealEls.forEach(el => el.classList.add('revealed'));
+      });
+    });
+  }
+
+  if(prefersReduced){
+    revealEls.forEach(el => el.classList.add('revealed'));
+  } else {
+    playReveal();
+  }
+
+  const typedEl = document.getElementById('typedWord');
+  if(!typedEl) return;
+  if(prefersReduced) return; // biarkan statis "Hebat" saja, jangan looping terus-menerus
+
+  const words = ["Hebat", "Maju", "Tangguh", "Sejahtera"];
+  let wordIndex = 0;
+  let charIndex = words[0].length;
+  let isDeleting = false;
+
+  function typeLoop(){
+    const currentWord = words[wordIndex];
+    if(isDeleting){
+      charIndex--;
+      typedEl.textContent = currentWord.substring(0, charIndex);
+      if(charIndex === 0){
+        isDeleting = false;
+        wordIndex = (wordIndex + 1) % words.length;
+        setTimeout(typeLoop, 350);
+        return;
+      }
+      setTimeout(typeLoop, 45);
+    } else {
+      charIndex++;
+      typedEl.textContent = currentWord.substring(0, charIndex);
+      if(charIndex === currentWord.length){
+        isDeleting = true;
+        setTimeout(typeLoop, 1500);
+        return;
+      }
+      setTimeout(typeLoop, 95);
+    }
+  }
+
+  setTimeout(() => {
+    isDeleting = true;
+    setTimeout(typeLoop, 1200);
+  }, 1000);
+})();
