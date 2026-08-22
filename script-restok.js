@@ -1,6 +1,6 @@
 // ===== Konfigurasi Google Sheets =====
 // Isi PUBLISHED_CSV_URL dengan link "Publish to web" (format CSV) dari sheet "RESTOK BARANG" kamu.
-const PUBLISHED_CSV_URL = "";
+const PUBLISHED_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQFAW59sO9oG4SuLeQJFe2i9zsSZXxOZ_tT5aXkhkQekJ4dlHrpSyqvm5CLf-AsgHhYzC1hW7n7xFH1/pub?gid=1530203111&single=true&output=csv";
 
 let restokData = [];
 

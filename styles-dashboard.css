@@ -130,6 +130,36 @@ td.stok-val{ font-family:'JetBrains Mono'; font-weight:600; }
 .status-habis{ background:var(--red-bg); color:var(--red); }
 .loading-row, .empty-row{ text-align:center; padding:40px 0; color:var(--slate400); font-size:13px; }
 
+/* ===== Ringkasan Dashboard (donut, mini-list) ===== */
+.panels-row-ringkasan{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+.see-all-link{ font-size:12px; font-weight:700; color:var(--b600); text-decoration:none; }
+
+.donut-wrap{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+.donut{ position:relative; width:130px; height:130px; flex-shrink:0; }
+.donut svg{ transform:rotate(-90deg); }
+.donut-center{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.donut-center b{ font-size:20px; font-family:'Sora'; }
+.donut-center span{ font-size:10px; color:var(--slate400); }
+.donut-legend{ display:flex; flex-direction:column; gap:9px; }
+.donut-legend .item{ display:flex; align-items:center; gap:7px; font-size:12.5px; color:var(--slate600); }
+.donut-legend .dot{ width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.donut-legend b{ margin-left:auto; font-family:'JetBrains Mono'; }
+
+.mini-list{ display:flex; flex-direction:column; gap:2px; }
+.mini-item{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding:10px 0; border-bottom:1px solid var(--slate100); font-size:12.5px;
+}
+.mini-item:last-child{ border-bottom:none; }
+.mini-item .mi-main{ min-width:0; }
+.mini-item .mi-name{ font-weight:600; color:var(--b900); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.mini-item .mi-sub{ color:var(--slate400); font-size:11px; margin-top:1px; }
+.mini-item .mi-val{ font-family:'JetBrains Mono'; font-weight:700; color:var(--slate600); flex-shrink:0; font-size:12px; }
+
+@media (max-width:1100px){
+  .panels-row-ringkasan{ grid-template-columns:1fr; }
+}
+
 @media (max-width:800px){
   .stats-row{ grid-template-columns:1fr 1fr; }
   .dash-header{ flex-direction:column; align-items:flex-start; }
