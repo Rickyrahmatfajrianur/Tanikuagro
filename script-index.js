@@ -44,7 +44,7 @@ function renderBrandMarquee(){
   track.innerHTML = brands.map(chip).join('') + brands.map(chip).join('');
 }
 
-const products = [
+const FALLBACK_PRODUCTS = [
   { id:"prima-laris", name:"Prima-Laris 240 OD", cat:"herbisida", size:"500 ml", img:"images/produk/prima-laris.webp", desc:"Herbisida sistemik purna tumbuh untuk mengendalikan gulma pada tanaman jagung.", activeIngredient:"Atrazin 180 g/L, Mesotrion 40 g/L, Nikosulfuron 20 g/L", target:"Gulma berdaun lebar dan rumput pada tanaman jagung", long:"Herbisida sistemik purna tumbuh berbentuk pekatan berwarna putih susu. Bekerja setelah gulma tumbuh, diserap melalui daun dan disebarkan ke seluruh bagian gulma sehingga mati sampai ke akar. Cocok digunakan pada budidaya tanaman jagung." },
   { id:"gisentro", name:"Gisentro 560 SC + Surfaktan", cat:"herbisida", size:"400 ml + 250 ml", img:"images/produk/gisentro.webp", desc:"Herbisida sistemik pra & purna tumbuh, kendalikan gulma daun lebar dan rumput di jagung.", activeIngredient:"Atrazin 500 g/L + Mesotrion 60 g/L", target:"Gulma berdaun lebar dan rumput pada tanaman jagung", long:"Herbisida sistemik selektif pra tumbuh dan purna tumbuh berbentuk pekatan suspensi yang dapat larut dalam air. Dilengkapi Surfaktan sebagai bahan perata yang membantu meratakan semprotan herbisida di permukaan daun gulma sasaran, sehingga daya kerjanya lebih efektif." },
   { id:"atradex", name:"Atradex 550 SC + Surfaktan", cat:"herbisida", size:"500 ml + 200 ml", img:"images/produk/atradex.webp", desc:"Herbisida sistemik pra & purna tumbuh untuk gulma daun lebar dan berdaun sempit pada jagung.", activeIngredient:"Mesotrion 50 g/L + Atrazin 500 g/L", target:"Gulma berdaun lebar dan berdaun sempit pada tanaman jagung", long:"Herbisida sistemik selektif pra tumbuh dan purna tumbuh berbentuk pekatan suspensi berwarna putih. Paket sudah termasuk Surfaktan untuk mendapatkan kualitas penyemprotan maksimal serta perhatian penuh pada petunjuk penggunaan di label." },
@@ -141,6 +141,44 @@ const products = [
   { id:"gramoxone-1l", name:"Gramoxone 276 SL 1 Liter", cat:"herbisida", size:"1 liter", img:"images/produk/gramoxone-combo.webp", desc:"Herbisida kontak purna tumbuh spektrum luas untuk berbagai jenis tanaman.", activeIngredient:"Parakuat Diklorida 276 g/L (setara ion parakuat 200 g/L)", target:"Anakan sawit liar, gulma berdaun lebar, sempit, dan teki pada berbagai tanaman", long:"Herbisida produksi Syngenta yang bekerja secara kontak purna tumbuh, berbentuk larutan dalam air berwarna hijau tua. Mengendalikan anakan sawit liar serta gulma berdaun lebar, sempit, dan teki di lahan tanpa tanaman maupun di sela tanaman perkebunan (karet, kelapa sawit, kopi, tebu, teh) dan tanaman pangan (jagung, padi gogo, kedelai, kentang, kubis, tomat) serta tanaman buah. Hanya digunakan oleh pengguna bersertifikat." },
   { id:"gempur-1l", name:"Gempur 480 SL 1 Liter", cat:"herbisida", size:"1 liter", img:"images/produk/gempur-combo.webp", desc:"Herbisida sistemik purna tumbuh untuk gulma di lahan perkebunan & persiapan lahan.", activeIngredient:"Isopropil Amina Glifosat 480 g/L (setara Glifosat 356 g/L)", target:"Gulma pada hutan tanaman industri, kakao, karet, kelapa sawit, kopi, teh, dan persiapan lahan jagung (TOT)", long:"Herbisida sistemik purna tumbuh berbentuk larutan yang dapat larut dalam air, berwarna kuning kecoklatan. Digunakan untuk mengendalikan gulma pada hutan tanaman industri (Acacia mangium), perkebunan kakao, karet, kelapa sawit, kopi, teh, serta persiapan lahan budidaya jagung tanpa olah tanah." },
 ];
+
+// ===== Ambil data produk dari Supabase (Master Produk) =====
+const SUPABASE_URL = "https://kbctbavayemjmglkwkil.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtiY3RiYXZheWVtam1nbGt3a2lsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc0Mzc2MTcsImV4cCI6MjEwMzAxMzYxN30.4gJ14L0XRzvEJCgROyDO_Yr5J7qNhdvA6jL2WCCeMoI";
+
+let products = [];
+
+function mapSupabaseRow(r){
+  return {
+    id: r.id,
+    name: r.name,
+    cat: r.cat,
+    size: r.size,
+    img: r.img,
+    desc: r.description,
+    activeIngredient: r.active_ingredient,
+    target: r.target,
+    long: r.long_desc,
+  };
+}
+
+async function loadProducts(){
+  try{
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/products?select=*`, {
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      },
+    });
+    if(!res.ok) throw new Error("Status " + res.status);
+    const rows = await res.json();
+    if(!Array.isArray(rows) || rows.length === 0) throw new Error("Data kosong");
+    products = rows.map(mapSupabaseRow);
+  } catch(err){
+    console.warn("Gagal ambil produk dari database, pakai data cadangan:", err);
+    products = FALLBACK_PRODUCTS;
+  }
+}
 
 const CATEGORIES = [
   { id:"herbisida", label:"Herbisida", icon:CATEGORY_ICONS.herbisida },
@@ -561,13 +599,13 @@ window.addEventListener('popstate', () => {
   }
 });
 
-(function checkInitialDetailParam(){
+function checkInitialDetailParam(){
   const params = new URLSearchParams(window.location.search);
   const pid = params.get('p');
   if(pid){
     openDetail(pid, { fromPopstate: true });
   }
-})();
+}
 
 
 document.getElementById('detailQPlus').addEventListener('click', () => {
@@ -596,9 +634,12 @@ detailAddCart.addEventListener('click', () => {
   if(prod) showToast(prod.name);
 });
 
-renderProducts();
 renderBrandMarquee();
-updateCartUI();
+loadProducts().then(() => {
+  renderProducts();
+  updateCartUI();
+  checkInitialDetailParam();
+});
 
 // ===== Header shadow saat scroll =====
 (function(){
