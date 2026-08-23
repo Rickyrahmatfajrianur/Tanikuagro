@@ -120,18 +120,14 @@
     .wa-fab svg{ width:25px; height:25px; }
   }
   .login-btn-placeholder{
-    display:flex; align-items:center; gap:6px; height:38px; padding:0 12px; border-radius:10px;
-    background:var(--slate50); border:1.5px solid var(--slate200); color:var(--slate500);
-    font-weight:600; font-size:13px; cursor:not-allowed; font-family:inherit;
+    display:flex; align-items:center; gap:6px; height:38px; padding:0 14px; border-radius:10px;
+    background:var(--b600); border:1.5px solid var(--b600); color:#fff;
+    font-weight:700; font-size:13px; cursor:pointer; font-family:inherit; text-decoration:none;
+    transition:background .15s, border-color .15s;
   }
-  .login-btn-placeholder .soon-badge{
-    background:var(--slate200); color:var(--slate500); font-size:10px; font-weight:700;
-    padding:2px 6px; border-radius:999px; text-transform:uppercase; letter-spacing:0.02em;
-  }
+  .login-btn-placeholder:hover{ background:var(--b700); border-color:var(--b700); }
   @media (max-width:900px){
-    .login-btn-placeholder span:not(.soon-badge){ display:none; }
     .login-btn-placeholder{ padding:0; width:38px; justify-content:center; }
-    .login-btn-placeholder .soon-badge{ display:none; }
   }
 
   /* ===== Hero ===== */
