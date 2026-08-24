@@ -199,7 +199,7 @@ async function loadSettings(){
 async function loadProducts(){
   await loadSettings();
   try{
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/products?select=*`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/products?select=*&order=updated_at.desc`, {
       headers: {
         apikey: SUPABASE_ANON_KEY,
         Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
