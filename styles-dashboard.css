@@ -121,7 +121,7 @@ th{ text-align:left; color:var(--slate400); font-weight:700; font-size:11px; tex
 td{ padding:12px 0; border-bottom:1px solid var(--slate100); }
 tbody tr:last-child td{ border-bottom:none; }
 td.prod-name{ font-weight:600; }
-td.stok-val{ font-family:'JetBrains Mono'; font-weight:600; }
+td.stok-val{ font-family:'Inter',sans-serif; font-variant-numeric:tabular-nums; font-weight:600; }
 .status-badge{
   display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:700; padding:4px 10px; border-radius:999px;
 }
@@ -143,7 +143,7 @@ td.stok-val{ font-family:'JetBrains Mono'; font-weight:600; }
 .donut-legend{ display:flex; flex-direction:column; gap:9px; }
 .donut-legend .item{ display:flex; align-items:center; gap:7px; font-size:12.5px; color:var(--slate600); }
 .donut-legend .dot{ width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-.donut-legend b{ margin-left:auto; font-family:'JetBrains Mono'; }
+.donut-legend b{ margin-left:auto; font-family:'Inter',sans-serif; font-variant-numeric:tabular-nums; }
 
 .mini-list{ display:flex; flex-direction:column; gap:2px; }
 .mini-item{
@@ -154,7 +154,7 @@ td.stok-val{ font-family:'JetBrains Mono'; font-weight:600; }
 .mini-item .mi-main{ min-width:0; }
 .mini-item .mi-name{ font-weight:600; color:var(--b900); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .mini-item .mi-sub{ color:var(--slate400); font-size:11px; margin-top:1px; }
-.mini-item .mi-val{ font-family:'JetBrains Mono'; font-weight:700; color:var(--slate600); flex-shrink:0; font-size:12px; }
+.mini-item .mi-val{ font-family:'Inter',sans-serif; font-variant-numeric:tabular-nums; font-weight:700; color:var(--slate600); flex-shrink:0; font-size:12px; }
 
 @media (max-width:1100px){
   .panels-row-ringkasan{ grid-template-columns:1fr; }
