@@ -295,10 +295,10 @@ function renderProducts(){
       ? `<img src="${p.img}" alt="${p.name}" loading="lazy">`
       : `<div class="noimg-ic">${catMeta ? catMeta.icon : ICONS.package}</div><div class="noimg-txt">Foto menyusul</div>`;
     card.innerHTML = `
-      <div class="imgwrap${p.img ? '' : ' noimg'}">${imgHtml}</div>
+      <div class="imgwrap${p.img ? '' : ' noimg'} clickable-open" data-id="${p.id}">${imgHtml}</div>
       <div class="body">
         <span class="chip ${p.cat}">${catLabel(p.cat)}</span>
-        <h3>${p.name}</h3>
+        <h3 class="clickable-open" data-id="${p.id}">${p.name}</h3>
         <p class="desc">${p.desc}</p>
         ${formatPriceDisplay(p.price) ? `<div class="price">${formatPriceDisplay(p.price)}</div>` : ""}
         <div class="card-bottom">
@@ -357,6 +357,9 @@ function attachProductEvents(){
   }));
   grid.querySelectorAll('.btn-detail').forEach(btn => btn.addEventListener('click', () => {
     openDetail(btn.dataset.id);
+  }));
+  grid.querySelectorAll('.clickable-open').forEach(el => el.addEventListener('click', () => {
+    openDetail(el.dataset.id);
   }));
 }
 
@@ -549,6 +552,23 @@ window.addEventListener('resize', updateCartUI);
 // ===== Product detail modal =====
 const detailOverlay = document.getElementById('detailOverlay');
 const detailImg = document.getElementById('detailImg');
+
+// ===== Lightbox foto detail produk =====
+const detailLightboxOverlay = document.getElementById('detailLightboxOverlay');
+const detailLightboxImg = document.getElementById('detailLightboxImg');
+const detailLightboxClose = document.getElementById('detailLightboxClose');
+function openDetailLightbox(){
+  if(!detailImg.src) return;
+  detailLightboxImg.src = detailImg.src;
+  detailLightboxOverlay.classList.add('active');
+}
+function closeDetailLightbox(){
+  detailLightboxOverlay.classList.remove('active');
+}
+if(detailImg) detailImg.addEventListener('click', openDetailLightbox);
+if(detailLightboxOverlay) detailLightboxOverlay.addEventListener('click', closeDetailLightbox);
+if(detailLightboxClose) detailLightboxClose.addEventListener('click', closeDetailLightbox);
+document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeDetailLightbox(); });
 const detailChip = document.getElementById('detailChip');
 const detailName = document.getElementById('detailName');
 const detailSize = document.getElementById('detailSize');
