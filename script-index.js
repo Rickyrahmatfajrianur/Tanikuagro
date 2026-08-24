@@ -745,9 +745,11 @@ loadProducts().then(() => {
 
 // ===== Hero: ambil teks kustom dari database, lalu reveal + typewriter =====
 (async function(){
+  let customWords = null;
+
   // 1. Ambil & suntik teks hero dari Supabase (kalau ada, kalau gagal biarkan teks default)
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/settings?id=eq.1&select=hero_heading,hero_lede`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/settings?id=eq.1&select=hero_heading,hero_lede,hero_typed_words`, {
       headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
     });
     if(res.ok){
@@ -764,6 +766,10 @@ loadProducts().then(() => {
         const ledeEl = document.getElementById("heroLede");
         if(ledeEl && settings.hero_lede){
           ledeEl.textContent = settings.hero_lede;
+        }
+        if(settings.hero_typed_words){
+          const parsed = settings.hero_typed_words.split(",").map(w => w.trim()).filter(Boolean);
+          if(parsed.length > 0) customWords = parsed;
         }
       }
     }
@@ -793,7 +799,7 @@ loadProducts().then(() => {
   if(!typedEl) return;
   if(prefersReduced) return; // biarkan statis "Hebat" saja, jangan looping terus-menerus
 
-  const words = ["Hebat", "Maju", "Tangguh", "Sejahtera"];
+  const words = customWords || ["Hebat", "Maju", "Tangguh", "Sejahtera"];
   let wordIndex = 0;
   let charIndex = words[0].length;
   let isDeleting = false;
