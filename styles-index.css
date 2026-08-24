@@ -410,11 +410,20 @@
   }
   .detail-overlay.open{ opacity:1; pointer-events:auto; }
   .detail-modal{
-    background:#fff; border-radius:22px; max-width:640px; width:100%; max-height:88vh; overflow-y:auto;
-    transform:scale(0.94) translateY(14px); opacity:0; transition: transform .32s cubic-bezier(0.16,1,0.3,1), opacity .28s ease;
+    background:#fff; border-radius:22px; max-width:640px; width:100%; max-height:88vh; overflow:hidden;
+    position:relative; transform:scale(0.94) translateY(14px); opacity:0;
+    transition: transform .32s cubic-bezier(0.16,1,0.3,1), opacity .28s ease;
     box-shadow:0 30px 70px rgba(11,42,68,0.35);
   }
   .detail-overlay.open .detail-modal{ transform:scale(1) translateY(0); opacity:1; }
+  .detail-scroll{
+    max-height:88vh; overflow-y:auto;
+    scrollbar-width:thin; scrollbar-color: rgba(11,42,68,0.28) transparent;
+  }
+  .detail-scroll::-webkit-scrollbar{ width:7px; }
+  .detail-scroll::-webkit-scrollbar-track{ background:transparent; }
+  .detail-scroll::-webkit-scrollbar-thumb{ background:rgba(11,42,68,0.28); border-radius:10px; }
+  .detail-scroll::-webkit-scrollbar-thumb:hover{ background:rgba(11,42,68,0.45); }
   .detail-head{ position:relative; }
   .detail-head img{ width:100%; height:260px; object-fit:contain; background:var(--slate50); }
   .detail-noimg{
@@ -438,7 +447,7 @@
   .detail-lightbox-close{ position:fixed; top:18px; right:24px; font-size:34px; color:#fff; cursor:pointer; z-index:1000; line-height:1; font-weight:300; }
   .detail-lightbox-close:hover{ color:var(--amber); }
   .detail-close{
-    position:absolute; top:16px; right:16px; width:36px; height:36px; border-radius:10px;
+    position:absolute; top:16px; right:16px; z-index:5; width:36px; height:36px; border-radius:10px;
     background:rgba(255,255,255,0.92); border:none; font-size:18px; cursor:pointer; box-shadow:var(--shadow-sm);
   }
   .detail-body{ padding:26px 28px 28px; }
