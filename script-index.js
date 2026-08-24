@@ -743,8 +743,35 @@ loadProducts().then(() => {
 })();
 
 
-// ===== Hero: reveal lembut saat halaman dibuka + typewriter kata terakhir =====
-(function(){
+// ===== Hero: ambil teks kustom dari database, lalu reveal + typewriter =====
+(async function(){
+  // 1. Ambil & suntik teks hero dari Supabase (kalau ada, kalau gagal biarkan teks default)
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/settings?id=eq.1&select=hero_heading,hero_lede`, {
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
+    });
+    if(res.ok){
+      const rows = await res.json();
+      if(Array.isArray(rows) && rows.length > 0){
+        const settings = rows[0];
+        const headingEl = document.getElementById("heroHeading");
+        if(headingEl && settings.hero_heading){
+          const escaped = settings.hero_heading
+            .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+          const withAccent = escaped.replace(/Taniku Agro/g, '<span class="accent">Taniku Agro</span>');
+          headingEl.innerHTML = withAccent + ' <span class="typed-word" id="typedWord">Hebat</span><span class="type-cursor"></span>';
+        }
+        const ledeEl = document.getElementById("heroLede");
+        if(ledeEl && settings.hero_lede){
+          ledeEl.textContent = settings.hero_lede;
+        }
+      }
+    }
+  } catch(err){
+    console.warn("Gagal ambil teks hero kustom, pakai teks default:", err);
+  }
+
+  // 2. Reveal lembut saat halaman dibuka + typewriter kata terakhir
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const revealEls = document.querySelectorAll('.hero-content .reveal');
 
