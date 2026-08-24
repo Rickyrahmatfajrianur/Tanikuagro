@@ -127,7 +127,15 @@
   }
   .login-btn-placeholder:hover{ background:var(--b700); border-color:var(--b700); }
   @media (max-width:900px){
-    .login-btn-placeholder{ padding:0; width:38px; justify-content:center; }
+    .login-btn-placeholder{ display:none; }
+  }
+  .nav-login-link{ display:none; }
+  @media (max-width:900px){
+    .nav-login-link{
+      display:flex; align-items:center; margin-top:6px; padding-top:14px !important;
+      border-bottom:none !important; border-top:1px solid var(--slate200);
+      font-weight:700; color:var(--b600);
+    }
   }
 
   /* ===== Hero ===== */
