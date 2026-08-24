@@ -154,6 +154,7 @@ function mapSupabaseRow(r){
     name: r.name,
     cat: r.cat,
     size: r.size,
+    price: r.price,
     img: r.img,
     desc: r.description,
     activeIngredient: r.active_ingredient,
@@ -162,7 +163,41 @@ function mapSupabaseRow(r){
   };
 }
 
+let showRealPrice = false;
+
+function maskPrice(price){
+  // Ganti tiap digit jadi X, biar tetap kelihatan "kelas harga" tanpa nunjukin angka asli
+  const formatted = Number(price).toLocaleString("id-ID");
+  return formatted.replace(/[0-9]/g, "X");
+}
+
+function formatPriceDisplay(price){
+  if(price === null || price === undefined || price === "") return null;
+  if(showRealPrice) return "Rp " + Number(price).toLocaleString("id-ID");
+  return "Rp " + maskPrice(price);
+}
+
+async function loadSettings(){
+  try{
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/settings?id=eq.1&select=show_real_price`, {
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      },
+    });
+    if(!res.ok) throw new Error("Status " + res.status);
+    const rows = await res.json();
+    if(Array.isArray(rows) && rows.length > 0){
+      showRealPrice = !!rows[0].show_real_price;
+    }
+  } catch(err){
+    console.warn("Gagal ambil pengaturan harga, default disembunyikan:", err);
+    showRealPrice = false;
+  }
+}
+
 async function loadProducts(){
+  await loadSettings();
   try{
     const res = await fetch(`${SUPABASE_URL}/rest/v1/products?select=*`, {
       headers: {
@@ -296,6 +331,7 @@ function renderProducts(){
         <span class="chip ${p.cat}">${catLabel(p.cat)}</span>
         <h3>${p.name}</h3>
         <p class="desc">${p.desc}</p>
+        ${formatPriceDisplay(p.price) ? `<div class="price">${formatPriceDisplay(p.price)}</div>` : ""}
         <div class="card-bottom">
           <div class="qty-stepper">
             <button class="qminus" data-id="${p.id}">−</button>
@@ -582,6 +618,12 @@ function openDetail(id, opts = {}){
   detailChip.className = `chip ${p.cat}`;
   detailName.textContent = p.name;
   detailSize.textContent = `Kemasan ${p.size}`;
+  const detailPriceEl = document.getElementById("detailPrice");
+  if(detailPriceEl){
+    const priceText = formatPriceDisplay(p.price);
+    detailPriceEl.textContent = priceText || "";
+    detailPriceEl.style.display = priceText ? "" : "none";
+  }
   detailLong.textContent = p.long || p.desc;
   detailIngredient.textContent = p.activeIngredient || "-";
   detailTarget.textContent = p.target || "-";

@@ -276,6 +276,7 @@
   .card h3{ font-size:16.5px; font-weight:700; color:var(--ink); margin-top:2px; }
   .card .mono{ color:var(--slate400); }
   .card p.desc{ font-size:13.8px; color:var(--slate600); margin:0; flex:1; line-height:1.55; }
+  .card .price{ font-family:'JetBrains Mono'; font-size:14.5px; font-weight:700; color:var(--b700); margin-top:2px; }
 
   .card-bottom{ display:flex; align-items:center; gap:10px; margin-top:12px; }
   .qty-stepper{
