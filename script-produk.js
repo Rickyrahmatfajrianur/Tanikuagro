@@ -156,6 +156,8 @@ function mapSupabaseRow(r){
     size: r.size,
     price: r.price,
     img: r.img,
+    img2: r.img2,
+    img3: r.img3,
     desc: r.description,
     activeIngredient: r.active_ingredient,
     target: r.target,
@@ -208,7 +210,7 @@ async function loadProducts(){
     if(!res.ok) throw new Error("Status " + res.status);
     const rows = await res.json();
     if(!Array.isArray(rows) || rows.length === 0) throw new Error("Data kosong");
-    products = rows.map(mapSupabaseRow);
+    products = rows.filter(r => !r.is_hidden).map(mapSupabaseRow);
   } catch(err){
     console.warn("Gagal ambil produk dari database, pakai data cadangan:", err);
     products = FALLBACK_PRODUCTS;
@@ -587,21 +589,77 @@ window.addEventListener('resize', updateCartUI);
 
 // ===== Product detail modal =====
 const detailOverlay = document.getElementById('detailOverlay');
-const detailImg = document.getElementById('detailImg');
+
+// ===== Carousel foto detail produk (maks 3 foto) =====
+const detailCarousel = document.getElementById('detailCarousel');
+const detailCarouselTrack = document.getElementById('detailCarouselTrack');
+const carouselPrev = document.getElementById('carouselPrev');
+const carouselNext = document.getElementById('carouselNext');
+const carouselDots = document.getElementById('carouselDots');
+let carouselImages = [];
+let carouselIndex = 0;
+
+function renderCarousel(images){
+  carouselImages = images;
+  carouselIndex = 0;
+  detailCarouselTrack.innerHTML = images.map((src, i) => `<img src="${src}" alt="Foto produk ${i+1}">`).join('');
+  carouselDots.innerHTML = images.length > 1
+    ? images.map((_, i) => `<button class="dot${i===0?' active':''}" data-idx="${i}" aria-label="Foto ${i+1}"></button>`).join('')
+    : '';
+  const showArrows = images.length > 1;
+  if(carouselPrev) carouselPrev.classList.toggle('show', showArrows);
+  if(carouselNext) carouselNext.classList.toggle('show', showArrows);
+  updateCarouselPosition();
+
+  detailCarouselTrack.querySelectorAll('img').forEach(img => {
+    img.addEventListener('click', openDetailLightbox);
+  });
+  carouselDots.querySelectorAll('.dot').forEach(dot => {
+    dot.addEventListener('click', () => goToSlide(parseInt(dot.dataset.idx, 10)));
+  });
+}
+
+function updateCarouselPosition(){
+  detailCarouselTrack.style.transform = `translateX(-${carouselIndex * 100}%)`;
+  carouselDots.querySelectorAll('.dot').forEach((dot, i) => dot.classList.toggle('active', i === carouselIndex));
+}
+
+function goToSlide(idx){
+  if(carouselImages.length === 0) return;
+  if(idx < 0) idx = carouselImages.length - 1;
+  if(idx >= carouselImages.length) idx = 0;
+  carouselIndex = idx;
+  updateCarouselPosition();
+}
+
+if(carouselPrev) carouselPrev.addEventListener('click', () => goToSlide(carouselIndex - 1));
+if(carouselNext) carouselNext.addEventListener('click', () => goToSlide(carouselIndex + 1));
+
+let carouselTouchStartX = 0;
+if(detailCarousel){
+  detailCarousel.addEventListener('touchstart', (e) => { carouselTouchStartX = e.touches[0].clientX; }, { passive: true });
+  detailCarousel.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - carouselTouchStartX;
+    if(Math.abs(dx) > 40){
+      if(dx > 0) goToSlide(carouselIndex - 1);
+      else goToSlide(carouselIndex + 1);
+    }
+  }, { passive: true });
+}
 
 // ===== Lightbox foto detail produk =====
 const detailLightboxOverlay = document.getElementById('detailLightboxOverlay');
 const detailLightboxImg = document.getElementById('detailLightboxImg');
 const detailLightboxClose = document.getElementById('detailLightboxClose');
 function openDetailLightbox(){
-  if(!detailImg.src) return;
-  detailLightboxImg.src = detailImg.src;
+  const currentSrc = carouselImages[carouselIndex];
+  if(!currentSrc) return;
+  detailLightboxImg.src = currentSrc;
   detailLightboxOverlay.classList.add('active');
 }
 function closeDetailLightbox(){
   detailLightboxOverlay.classList.remove('active');
 }
-if(detailImg) detailImg.addEventListener('click', openDetailLightbox);
 if(detailLightboxOverlay) detailLightboxOverlay.addEventListener('click', closeDetailLightbox);
 if(detailLightboxClose) detailLightboxClose.addEventListener('click', closeDetailLightbox);
 document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeDetailLightbox(); });
@@ -623,14 +681,14 @@ function openDetail(id, opts = {}){
 
   const detailNoImg = document.getElementById('detailNoImg');
   const detailNoImgIcon = document.getElementById('detailNoImgIcon');
-  if(p.img){
-    detailImg.src = p.img;
-    detailImg.alt = p.name;
-    detailImg.style.display = '';
+  const images = [p.img, p.img2, p.img3].filter(Boolean);
+  if(images.length > 0){
+    renderCarousel(images);
+    if(detailCarousel) detailCarousel.style.display = '';
     detailNoImg.style.display = 'none';
   } else {
     const catMeta = CATEGORIES.find(c => c.id === p.cat);
-    detailImg.style.display = 'none';
+    if(detailCarousel) detailCarousel.style.display = 'none';
     detailNoImgIcon.innerHTML = catMeta ? catMeta.icon : ICONS.package;
     detailNoImg.style.display = 'flex';
   }
