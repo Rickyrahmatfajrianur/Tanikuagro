@@ -307,6 +307,17 @@
   .btn-addcart:active{ transform:scale(0.96); }
   .btn-addcart.added{ background:var(--green); }
 
+  /* ===== Skeleton loading (dipakai sebelum produk selesai dimuat) ===== */
+  @keyframes shimmer{ 0%{ background-position:200% 0; } 100%{ background-position:-200% 0; } }
+  .skel{
+    background:linear-gradient(90deg, var(--slate100) 25%, var(--slate200) 50%, var(--slate100) 75%);
+    background-size:200% 100%; animation:shimmer 1.4s ease-in-out infinite; border-radius:6px; display:block;
+  }
+  .card.skeleton{ pointer-events:none; }
+  .card.skeleton:hover{ transform:none; box-shadow:none; }
+  .card.skeleton .imgwrap{ padding:0; }
+  .card.skeleton .imgwrap .skel{ border-radius:0; }
+
   /* ===== Toast notifikasi ===== */
   .toast{
     position:fixed; top:18px; right:18px; z-index:1200;
