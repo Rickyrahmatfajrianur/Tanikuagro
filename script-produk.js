@@ -240,6 +240,11 @@ function catLabel(id){ const c = CATEGORIES.find(c => c.id === id); return c ? c
 const WA_NUMBER = "6285157215526";
 const cart = {};
 let activeCat = "all";
+// Kalau datang dari link kategori di Beranda (produk?cat=insektisida), langsung filter ke kategori itu.
+const initialCatParam = new URLSearchParams(window.location.search).get("cat");
+if (initialCatParam && CATEGORIES.some((c) => c.id === initialCatParam)) {
+  activeCat = initialCatParam;
+}
 let searchTerm = "";
 const PAGE_SIZE = 30;
 let visibleCount = PAGE_SIZE;
