@@ -1,49 +1,3 @@
-const brands = [
-  { name:"Syngenta", logo:"images/brand/syngenta.webp" },
-  { name:"Bayer", logo:"images/brand/bayer.webp" },
-  { name:"FMC", logo:"images/brand/fmc.webp" },
-  { name:"Corteva", logo:"images/brand/corteva.webp" },
-  { name:"Nufarm", logo:"images/brand/nufarm.webp" },
-  { name:"BASF", logo:"images/brand/basf.webp" },
-  { name:"Advansia", logo:"images/brand/advansia.webp" },
-  { name:"Biotis Agrindo", logo:"images/brand/biotis-agrindo.webp" },
-  { name:"CBA", logo:"images/brand/cba.webp" },
-  { name:"Mahakam", logo:"images/brand/mahakam.webp" },
-  { name:"Asiana Chemicalindo", logo:"images/brand/asiana-chemicalindo.webp" },
-  { name:"Prima Karya", logo:"images/brand/prima-karya.webp" },
-  { name:"Sari Kresna Kimia", logo:"images/brand/sari-kresna-kimia.webp" },
-  { name:"Excel Meg Indo", logo:"images/brand/excel-meg-indo.webp" },
-  { name:"Adil Makmur Fajar", logo:"images/brand/adil-makmur-fajar.webp" },
-  { name:"Meroke Tetap Jaya", logo:"images/brand/meroke-tetap-jaya.webp" },
-  { name:"Maxxi Agri", logo:"images/brand/maxxi-agri.webp" },
-  { name:"Delta Chemical", logo:"images/brand/delta-chemical.webp" },
-  { name:"DGW", logo:"images/brand/dgw.webp" },
-  { name:"Agricon", logo:"images/brand/agricon.webp" },
-  { name:"Tiara Buana Mandiri", logo:"images/brand/tiara-buana-mandiri.webp" },
-  { name:"Saprotan Utama", logo:"images/brand/saprotan-utama.webp" },
-  { name:"Cap Panah Merah", logo:"images/brand/cap-panah-merah.webp" },
-  { name:"Benih Pertiwi", logo:"images/brand/benih-pertiwi.webp" },
-  { name:"Santani Agro", logo:"images/brand/santani-agro.webp" },
-  { name:"Mahkota", logo:"images/brand/mahkota.webp" },
-  { name:"Petrokimia Kayaku", logo:"images/brand/petrokimia-kayaku.webp" },
-  { name:"MTA Jaya", logo:"images/brand/mta-jaya.webp" },
-  { name:"Petrosida Gresik", logo:"images/brand/petrosida-gresik.webp" },
-  { name:"Cap Kapal Terbang", logo:"images/brand/cap-kapal-terbang.webp" },
-];
-
-function renderBrandMarquee(){
-  const track = document.getElementById('brandTrack');
-  if(!track) return;
-  const chip = b => {
-    const inner = b.logo
-      ? `<img src="${b.logo}" alt="${b.name}">`
-      : `<span class="bc-fallback">${b.name.charAt(0)}</span><span class="bc-name">${b.name}</span>`;
-    return `<div class="brand-chip">${inner}</div>`;
-  };
-  // duplicated twice for seamless infinite loop
-  track.innerHTML = brands.map(chip).join('') + brands.map(chip).join('');
-}
-
 const FALLBACK_PRODUCTS = [
   { id:"prima-laris", name:"Prima-Laris 240 OD", cat:"herbisida", size:"500 ml", img:"images/produk/prima-laris.webp", desc:"Herbisida sistemik purna tumbuh untuk mengendalikan gulma pada tanaman jagung.", activeIngredient:"Atrazin 180 g/L, Mesotrion 40 g/L, Nikosulfuron 20 g/L", target:"Gulma berdaun lebar dan rumput pada tanaman jagung", long:"Herbisida sistemik purna tumbuh berbentuk pekatan berwarna putih susu. Bekerja setelah gulma tumbuh, diserap melalui daun dan disebarkan ke seluruh bagian gulma sehingga mati sampai ke akar. Cocok digunakan pada budidaya tanaman jagung." },
   { id:"gisentro", name:"Gisentro 560 SC + Surfaktan", cat:"herbisida", size:"400 ml + 250 ml", img:"images/produk/gisentro.webp", desc:"Herbisida sistemik pra & purna tumbuh, kendalikan gulma daun lebar dan rumput di jagung.", activeIngredient:"Atrazin 500 g/L + Mesotrion 60 g/L", target:"Gulma berdaun lebar dan rumput pada tanaman jagung", long:"Herbisida sistemik selektif pra tumbuh dan purna tumbuh berbentuk pekatan suspensi yang dapat larut dalam air. Dilengkapi Surfaktan sebagai bahan perata yang membantu meratakan semprotan herbisida di permukaan daun gulma sasaran, sehingga daya kerjanya lebih efektif." },
@@ -217,27 +171,6 @@ async function loadProducts(){
   }
 }
 
-const CATEGORIES = [
-  { id:"herbisida", label:"Herbisida", icon:CATEGORY_ICONS.herbisida },
-  { id:"fungisida", label:"Fungisida", icon:CATEGORY_ICONS.fungisida },
-  { id:"insektisida", label:"Insektisida", icon:CATEGORY_ICONS.insektisida },
-  { id:"akarisida", label:"Akarisida", icon:CATEGORY_ICONS.akarisida },
-  { id:"nematisida", label:"Nematisida", icon:CATEGORY_ICONS.nematisida },
-  { id:"moluskisida", label:"Moluskisida", icon:CATEGORY_ICONS.moluskisida },
-  { id:"rodentisida", label:"Rodentisida", icon:CATEGORY_ICONS.rodentisida },
-  { id:"bakterisida", label:"Bakterisida", icon:CATEGORY_ICONS.bakterisida },
-  { id:"zpt", label:"ZPT", icon:CATEGORY_ICONS.zpt },
-  { id:"perekat", label:"Perekat & Surfaktan", icon:CATEGORY_ICONS.perekat },
-  { id:"pupuk", label:"Pupuk", icon:CATEGORY_ICONS.pupuk },
-  { id:"benih", label:"Benih", icon:CATEGORY_ICONS.benih },
-  { id:"biopestisida", label:"Biopestisida", icon:CATEGORY_ICONS.biopestisida },
-  { id:"alat", label:"Alat Pertanian", icon:CATEGORY_ICONS.alat },
-  { id:"sparepart", label:"Spare Part", icon:CATEGORY_ICONS.sparepart },
-  { id:"lainnya", label:"Lainnya", icon:CATEGORY_ICONS.lainnya },
-];
-function catLabel(id){ const c = CATEGORIES.find(c => c.id === id); return c ? c.label : id; }
-
-const WA_NUMBER = "6285157215526";
 const cart = {};
 let activeCat = "all";
 // Kalau datang dari link kategori di Beranda (produk?cat=insektisida), langsung filter ke kategori itu.
@@ -248,9 +181,6 @@ if (initialCatParam && CATEGORIES.some((c) => c.id === initialCatParam)) {
 let searchTerm = "";
 const PAGE_SIZE = 30;
 let visibleCount = PAGE_SIZE;
-
-function waGeneralLink(){ return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Halo Taniku Agro, saya mau tanya produk")}`; }
-function waSingleLink(name){ return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`Halo Taniku Agro, saya mau tanya stok & harga ${name}`)}`; }
 
 const grid = document.getElementById('productGrid');
 
@@ -587,7 +517,7 @@ checkoutBtn.addEventListener('click', () => {
     msg += `${idx + 1}. ${p.name} x${qty}\n`;
   });
   msg += "\nMohon info total & ketersediaan. Terima kasih.";
-  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+  window.open(`https://wa.me/${currentWaNumber()}?text=${encodeURIComponent(msg)}`, '_blank');
 });
 
 window.addEventListener('resize', updateCartUI);
@@ -795,51 +725,10 @@ detailAddCart.addEventListener('click', () => {
   if(prod) showToast(prod.name);
 });
 
-renderBrandMarquee();
 loadProducts().then(() => {
   renderCatSidebar();
   renderProducts();
   updateCartUI();
   checkInitialDetailParam();
 });
-
-// ===== Header shadow saat scroll =====
-(function(){
-  const header = document.querySelector("header");
-  if(!header) return;
-  const toggleShadow = () => {
-    if(window.scrollY > 8){ header.classList.add("scrolled"); }
-    else { header.classList.remove("scrolled"); }
-  };
-  toggleShadow();
-  window.addEventListener("scroll", toggleShadow, { passive: true });
-})();
-
-
-// ===== Menu hamburger (mobile) =====
-(function(){
-  const hamburgerBtn = document.getElementById("hamburgerBtn");
-  const navLinks = document.querySelector("nav.links");
-  if(!hamburgerBtn || !navLinks) return;
-
-  hamburgerBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    navLinks.classList.toggle("mobile-open");
-  });
-
-  navLinks.querySelectorAll("a").forEach(a => {
-    a.addEventListener("click", () => navLinks.classList.remove("mobile-open"));
-  });
-
-  document.addEventListener("click", (e) => {
-    if(navLinks.classList.contains("mobile-open") && !navLinks.contains(e.target) && !hamburgerBtn.contains(e.target)){
-      navLinks.classList.remove("mobile-open");
-    }
-  });
-
-  window.addEventListener("resize", () => {
-    if(window.innerWidth > 900) navLinks.classList.remove("mobile-open");
-  });
-})();
-
 

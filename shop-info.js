@@ -18,6 +18,7 @@
     if(s.whatsapp){
       const digits = s.whatsapp.replace(/[^0-9]/g, "").replace(/^0/, "62");
       if(digits.length >= 8){
+        window.SHOP_WHATSAPP_NUMBER = digits; // dipakai script-index.js/script-produk.js buat link checkout & tanya produk
         document.querySelectorAll('a[href*="wa.me/6285157215526"]').forEach(a => {
           a.href = a.href.replace("6285157215526", digits);
         });

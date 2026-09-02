@@ -217,35 +217,11 @@ async function loadProducts(){
   }
 }
 
-const CATEGORIES = [
-  { id:"herbisida", label:"Herbisida", icon:CATEGORY_ICONS.herbisida },
-  { id:"fungisida", label:"Fungisida", icon:CATEGORY_ICONS.fungisida },
-  { id:"insektisida", label:"Insektisida", icon:CATEGORY_ICONS.insektisida },
-  { id:"akarisida", label:"Akarisida", icon:CATEGORY_ICONS.akarisida },
-  { id:"nematisida", label:"Nematisida", icon:CATEGORY_ICONS.nematisida },
-  { id:"moluskisida", label:"Moluskisida", icon:CATEGORY_ICONS.moluskisida },
-  { id:"rodentisida", label:"Rodentisida", icon:CATEGORY_ICONS.rodentisida },
-  { id:"bakterisida", label:"Bakterisida", icon:CATEGORY_ICONS.bakterisida },
-  { id:"zpt", label:"ZPT", icon:CATEGORY_ICONS.zpt },
-  { id:"perekat", label:"Perekat & Surfaktan", icon:CATEGORY_ICONS.perekat },
-  { id:"pupuk", label:"Pupuk", icon:CATEGORY_ICONS.pupuk },
-  { id:"benih", label:"Benih", icon:CATEGORY_ICONS.benih },
-  { id:"biopestisida", label:"Biopestisida", icon:CATEGORY_ICONS.biopestisida },
-  { id:"alat", label:"Alat Pertanian", icon:CATEGORY_ICONS.alat },
-  { id:"sparepart", label:"Spare Part", icon:CATEGORY_ICONS.sparepart },
-  { id:"lainnya", label:"Lainnya", icon:CATEGORY_ICONS.lainnya },
-];
-function catLabel(id){ const c = CATEGORIES.find(c => c.id === id); return c ? c.label : id; }
-
-const WA_NUMBER = "6285157215526";
 const cart = {};
 let activeCat = "all";
 let searchTerm = "";
 const PAGE_SIZE = 21;
 let visibleCount = PAGE_SIZE;
-
-function waGeneralLink(){ return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Halo Taniku Agro, saya mau tanya produk")}`; }
-function waSingleLink(name){ return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`Halo Taniku Agro, saya mau tanya stok & harga ${name}`)}`; }
 
 const grid = document.getElementById('productGrid');
 
@@ -565,7 +541,7 @@ checkoutBtn.addEventListener('click', () => {
     msg += `${idx + 1}. ${p.name} x${qty}\n`;
   });
   msg += "\nMohon info total & ketersediaan. Terima kasih.";
-  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+  window.open(`https://wa.me/${currentWaNumber()}?text=${encodeURIComponent(msg)}`, '_blank');
 });
 
 window.addEventListener('resize', updateCartUI);
@@ -746,7 +722,6 @@ function checkInitialDetailParam(){
   }
 }
 
-
 document.getElementById('detailQPlus').addEventListener('click', () => {
   if(!currentDetailId) return;
   cart[currentDetailId] = (cart[currentDetailId] || 0) + 1;
@@ -780,46 +755,6 @@ loadProducts().then(() => {
   updateCartUI();
   checkInitialDetailParam();
 });
-
-// ===== Header shadow saat scroll =====
-(function(){
-  const header = document.querySelector("header");
-  if(!header) return;
-  const toggleShadow = () => {
-    if(window.scrollY > 8){ header.classList.add("scrolled"); }
-    else { header.classList.remove("scrolled"); }
-  };
-  toggleShadow();
-  window.addEventListener("scroll", toggleShadow, { passive: true });
-})();
-
-
-// ===== Menu hamburger (mobile) =====
-(function(){
-  const hamburgerBtn = document.getElementById("hamburgerBtn");
-  const navLinks = document.querySelector("nav.links");
-  if(!hamburgerBtn || !navLinks) return;
-
-  hamburgerBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    navLinks.classList.toggle("mobile-open");
-  });
-
-  navLinks.querySelectorAll("a").forEach(a => {
-    a.addEventListener("click", () => navLinks.classList.remove("mobile-open"));
-  });
-
-  document.addEventListener("click", (e) => {
-    if(navLinks.classList.contains("mobile-open") && !navLinks.contains(e.target) && !hamburgerBtn.contains(e.target)){
-      navLinks.classList.remove("mobile-open");
-    }
-  });
-
-  window.addEventListener("resize", () => {
-    if(window.innerWidth > 900) navLinks.classList.remove("mobile-open");
-  });
-})();
-
 
 // ===== Hero: ambil teks kustom dari database, lalu reveal + typewriter =====
 (async function(){
