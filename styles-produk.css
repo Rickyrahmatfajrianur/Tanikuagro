@@ -494,7 +494,10 @@
     position:absolute; top:16px; right:16px; z-index:5; width:36px; height:36px; border-radius:10px;
     background:rgba(255,255,255,0.92); border:none; font-size:18px; cursor:pointer; box-shadow:var(--shadow-sm);
   }
-  .detail-body{ flex:1; min-width:0; overflow-y:auto; padding:26px 28px 28px; }
+  /* .detail-body sekarang cuma pembungkus flex-column: .detail-info yang scroll,
+     .detail-footer (tombol) selalu nempel di bawah dan nggak ikut ke-scroll. */
+  .detail-body{ flex:1; min-width:0; display:flex; flex-direction:column; padding:0; }
+  .detail-info{ flex:1; overflow-y:auto; padding:26px 28px 18px; }
   .detail-body .chip{ margin-bottom:10px; }
   .detail-body h3{ font-size:22px; font-weight:800; color:var(--b900); }
   .detail-body .mono{ color:var(--slate400); margin-top:4px; }
@@ -505,7 +508,7 @@
   .detail-section p{ font-size:14.5px; color:var(--slate600); line-height:1.65; margin:0; }
   /* Baris 1: qty + tombol utama. Baris 2 (flex-basis:100%): tombol WA sendiri, biar nggak rebutan tempat. */
   .detail-footer{
-    margin-top:26px; padding-top:20px; border-top:1px solid var(--slate200);
+    flex-shrink:0; padding:16px 28px 22px; border-top:1px solid var(--slate200); background:#fff;
     display:flex; align-items:center; gap:10px; flex-wrap:wrap;
   }
   .detail-footer .qty-stepper{ flex-shrink:0; }
@@ -531,7 +534,14 @@
     .detail-head{ flex:none; width:100%; min-height:0; border-right:none; border-bottom:1px solid var(--slate200); }
     .detail-head img{ height:260px; }
     .detail-carousel{ height:260px; padding:0; }
-    .detail-body{ overflow-y:visible; }
+    /* .detail-body nggak lagi punya scroll sendiri di mobile -- seluruh .detail-scroll yang di-scroll.
+       Tombolnya dibikin "sticky" nempel di bawah viewport modal selagi discroll. */
+    .detail-body{ display:block; }
+    .detail-info{ overflow-y:visible; padding:22px 20px 16px; }
+    .detail-footer{
+      position:sticky; bottom:0; z-index:2; padding:14px 20px 18px;
+      box-shadow:0 -6px 16px rgba(11,42,68,0.08);
+    }
   }
 
   @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
