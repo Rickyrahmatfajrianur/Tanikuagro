@@ -448,8 +448,10 @@
     box-shadow:0 30px 70px rgba(11,42,68,0.35);
   }
   .detail-overlay.open .detail-modal{ transform:scale(1) translateY(0); opacity:1; }
-  /* Desktop: foto di panel kiri (tinggi penuh), detail produk di panel kanan (scroll sendiri) */
-  .detail-scroll{ display:flex; max-height:88vh; }
+  /* Desktop: foto di panel kiri (tinggi penuh), detail produk di panel kanan (scroll sendiri).
+     Tinggi dibikin TETAP (bukan ngikutin panjang teks), supaya modalnya konsisten di semua produk
+     -- produk yang deskripsinya panjang tinggal scroll di panel kanan, bukan bikin modalnya melar. */
+  .detail-scroll{ display:flex; height:620px; max-height:88vh; }
   .detail-head{ position:relative; flex:0 0 42%; min-height:420px; background:#fff; border-right:1px solid var(--slate200); display:flex; }
   .detail-head img{ width:100%; height:100%; object-fit:contain; background:#fff; }
   .detail-carousel{ position:relative; width:100%; height:auto; flex:1; overflow:hidden; background:#fff; padding:26px; box-sizing:border-box; }
@@ -528,7 +530,9 @@
 
   /* Mobile: balik ke susunan atas-bawah (foto di atas, detail di bawah) */
   @media (max-width:760px){
-    .detail-scroll{ flex-direction:column; overflow-y:auto; }
+    /* Di mobile biarin tinggi ngikutin konten lagi (bukan tetap), soalnya di sini modalnya
+       memang dimaksudkan buat di-scroll sebagai satu halaman penuh, bukan panel terpisah. */
+    .detail-scroll{ flex-direction:column; height:auto; max-height:88vh; overflow-y:auto; }
     .detail-head{ flex:none; width:100%; min-height:0; border-right:none; border-bottom:1px solid var(--slate200); }
     .detail-head img{ height:260px; }
     .detail-carousel{ height:260px; padding:0; }
