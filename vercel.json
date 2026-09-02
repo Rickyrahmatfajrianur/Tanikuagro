@@ -1,13 +1,8 @@
 {
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "redirects": [
-    { "source": "/login", "destination": "https://admin.tanikuagro.com", "permanent": false },
-    { "source": "/dashboard", "destination": "https://admin.tanikuagro.com/ringkasan", "permanent": false },
-    { "source": "/stok-barang", "destination": "https://admin.tanikuagro.com/stok-barang", "permanent": false },
-    { "source": "/restok", "destination": "https://admin.tanikuagro.com/restok", "permanent": false },
-    { "source": "/penjualan", "destination": "https://admin.tanikuagro.com/penjualan", "permanent": false },
-    { "source": "/supplier", "destination": "https://admin.tanikuagro.com/supplier", "permanent": false },
-    { "source": "/pengaturan", "destination": "https://admin.tanikuagro.com/pengaturan", "permanent": false }
+  "crons": [
+    {
+      "path": "/api/keepalive",
+      "schedule": "0 19 * * *"
+    }
   ]
 }
