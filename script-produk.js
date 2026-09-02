@@ -184,6 +184,25 @@ let visibleCount = PAGE_SIZE;
 
 const grid = document.getElementById('productGrid');
 
+function renderSkeletonCards(count = 9){
+  grid.innerHTML = Array.from({ length: count }).map((_, i) => `
+    <div class="card skeleton" style="animation-delay:${i * 0.04}s">
+      <div class="imgwrap"><div class="skel" style="width:100%;height:100%;"></div></div>
+      <div class="body">
+        <div class="skel" style="width:76px;height:20px;border-radius:999px;"></div>
+        <div class="skel" style="width:85%;height:16px;margin-top:6px;"></div>
+        <div class="skel" style="width:100%;height:13px;margin-top:10px;"></div>
+        <div class="skel" style="width:60%;height:13px;margin-top:6px;"></div>
+        <div class="skel" style="width:90px;height:15px;margin-top:10px;"></div>
+        <div class="card-bottom">
+          <div class="skel" style="width:96px;height:36px;border-radius:11px;"></div>
+          <div class="skel" style="flex:1;height:36px;border-radius:11px;"></div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
 // Render sidebar kategori dengan jumlah produk per kategori
 const catSidebar = document.getElementById('catSidebar');
 
@@ -725,6 +744,7 @@ detailAddCart.addEventListener('click', () => {
   if(prod) showToast(prod.name);
 });
 
+renderSkeletonCards();
 loadProducts().then(() => {
   renderCatSidebar();
   renderProducts();
